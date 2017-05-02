@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+<http create-session="stateless" entry-point-ref="digestEntryPoint" use-expressions="true" auto-config='true' disable-url-rewriting="false">
+    <csrf disabled="true"/>
+   <intercept-url pattern="/User_details/**" access="hasRole('USER')" />
+ <intercept-url pattern="/Engineer_details/**" access="hasRole('USER')" />
+ <intercept-url pattern="/Login_details/**" access="hasRole('USER')" />
+  <intercept-url pattern="/Order_details/**" access="hasRole('USER')" />
+   <intercept-url pattern="/Service_details/**" access="hasRole('USER')" />
+   <intercept-url pattern="/EnggLogin_details/**" access="hasRole('USER')" />
+   <http-basic />
+   <custom-filter ref="digestFilter" after="BASIC_AUTH_FILTER" />
+</http>
+ 
+<beans:bean id="digestFilter" class=
+ "org.springframework.security.web.authentication.www.DigestAuthenticationFilter">
+   <beans:property name="userDetailsService" ref="userService" />
+   <beans:property name="authenticationEntryPoint" ref="digestEntryPoint" />
+</beans:bean>
+ 
+<beans:bean id="digestEntryPoint" class=
+ "org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint">
+   <beans:property name="realmName" value="Contacts Realm via Digest Authentication"/>
+   <beans:property name="key" value="acegi" />
+</beans:bean>
+ 
+<authentication-manager>
+   <authentication-provider>
+      <user-service id="userService">
+         <!-- <user name="eparaschiv" password="eparaschiv" authorities="hasRole('ROLE_ADMIN')" /> -->
+         <user name="eximius" password="bookmyservice" authorities="ROLE_USER" />
+      </user-service>
+   </authentication-provider>
+</authentication-manager>
+ 
+</beans:beans>
