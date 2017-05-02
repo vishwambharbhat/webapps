@@ -31,6 +31,7 @@ public void doGet(HttpServletRequest request,HttpServletResponse response){
 		} catch (SQLException | ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			//end
 		}
 		
 	}
